@@ -1,16 +1,16 @@
 /**
  * sender-js service implementation
  * 
- * @author Invatechs Software https://www.invatechs.com
+ * @author Alexey Sadovsky
  */
 
-var util = require('util');
 var services = require('./services');
 var ServiceNodemailer = require('./lib/service-nodemailer.js');
 var ServiceMailgun = require('./lib/service-mailgun.js');
 var ServiceSlack = require('./lib/service-slack.js');
 var ServiceRequest = require('./lib/service-request.js');
 var ServiceTelegram = require('./lib/service-telegram.js');
+var ServiceSMS = require('./lib/service-sms.js');
 
 var senderServices = {};  // Current sender service
 
@@ -181,6 +181,25 @@ function resolveTelegramOptions(tgName, tgOptions) {
 }
 
 /**
+ * Resolves SMS Service options and saves them into local options object
+ * 
+ * @param {String} smsName SMS service internal service name
+ * @param {Object} sgOptions SMS service options to resolve
+ * @throws {Error} Exception
+ */
+function resolveSMSOptions(smsName, sgOptions) {
+  if(!smsName) {
+    throw new Error("Wrong SMS service name: " + smsName.toString());
+  }
+  if(sgOptions.hasOwnProperty('accountSid') && sgOptions.authToken) {
+    options[smsName].accountSid = sgOptions.accountSid;
+    options[smsName].authToken = sgOptions.authToken;
+  } else {
+    throw new Error("Wrong SMS service token: " + sgOptions.token);
+  }
+}
+
+/**
  * Parses options passed by argument
  * 
  * @param {Object} newOptions Options need to be parsed
@@ -215,6 +234,10 @@ function setOptions(newOptions) {
         case "telegram":
           resolveTelegramOptions(services[service], newOptions[service]);
           options.sendServices.push("telegram");
+          break;
+        case "sms":
+          resolveSMSOptions(services[service], newOptions[service]);
+          options.sendServices.push("sms");
           break;
       }
     } else {
@@ -307,10 +330,20 @@ module.exports.getRequestService = function(options) {
  * Returns Telegram service object
  * 
  * @param {Object} options Telegram options
- * @returns {TelegramService}
+ * @returns {ServiceTelegram}
  */
 module.exports.getTelegramService = function(options) {
   return new ServiceTelegram(options);
+};
+
+/**
+ * Returns SMS service object
+ * 
+ * @param {Object} options SMS options
+ * @returns {ServiceSMS}
+ */
+module.exports.getSMSService = function(options) {
+  return new ServiceSMS(options);
 };
 
 /**
@@ -367,6 +400,9 @@ var init = function (serviceOptions) {
           break;
         case "telegram":
           senderServices['telegram'] = new ServiceTelegram(options, true);
+          break;
+        case "sms":
+          senderServices['sms'] = new ServiceSMS(options, true);
           break;
       }
     }

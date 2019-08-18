@@ -7,5 +7,6 @@
   "mailgun"    : "mailgun-js",
   "slack"      : "slack",
   "http"       : "request",
-  "telegram"   : "telegram"
+  "telegram"   : "telegram",
+  "sms"        : "sms"
 }

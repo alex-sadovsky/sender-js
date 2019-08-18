@@ -1,25 +1,27 @@
 {
   "name": "sender-js",
-  "author": "Invatecs Software",
+  "author": "Alexey Sadovsky",
   "keywords": [
     "email",
     "mailgun",
     "nodemailer",
-    "slack"
+    "slack",
+    "SMS"
   ],
   "contributors": [
-    "Alex Sadovsky <alex.sad.dev@gmail.com>"
+    "Alex Sadovsky <alexey.sadovsky@gmail.com>"
   ],
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "Universal sender module",
   "main": "./sender-js.js",
   "dependencies": {
+    "es6-shim": "0.35.0",
     "mailgun-js": "0.7.2",
     "nodemailer": "1.8.0",
-    "slack-client": "1.5.1",
     "request": "2.69.0",
+    "slack-client": "1.5.1",
     "telegram-api": "0.6.0",
-    "es6-shim": "0.35.0"
+    "twilio": "^3.33.3"
   },
   "devDependencies": {
     "jshint": "latest",
@@ -31,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/invatechs/sender-js.git"
+    "url": "git://github.com/alex-sadovsky/sender-js.git"
   },
   "license": "MIT"
 }
