@@ -191,11 +191,11 @@ function resolveSMSOptions(smsName, sgOptions) {
   if(!smsName) {
     throw new Error("Wrong SMS service name: " + smsName.toString());
   }
-  if(sgOptions.hasOwnProperty('accountSid') && sgOptions.authToken) {
-    options[smsName].accountSid = sgOptions.accountSid;
-    options[smsName].authToken = sgOptions.authToken;
+  if(sgOptions.hasOwnProperty('customerId') && sgOptions.apiKey) {
+    options[smsName].customerId = sgOptions.customerId;
+    options[smsName].apiKey = sgOptions.apiKey;
   } else {
-    throw new Error("Wrong SMS service token: " + sgOptions.token);
+    throw new Error("Wrong SMS service API key: " + sgOptions.apiKey);
   }
 }
 

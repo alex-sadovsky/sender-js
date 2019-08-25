@@ -21,7 +21,7 @@
     "request": "2.69.0",
     "slack-client": "1.5.1",
     "telegram-api": "0.6.0",
-    "twilio": "^3.33.3"
+    "telesignsdk": "^2.2.1"
   },
   "devDependencies": {
     "jshint": "latest",
